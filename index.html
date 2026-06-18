@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinTrack — Dashboard</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Folha de estilos separada (conforme exigido) -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Configuração de tema Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50:  '#EFF6FF',
+              100: '#DBEAFE',
+              500: '#3B82F6',
+              600: '#2563EB',
+              700: '#1D4ED8',
+              900: '#0F1E3C',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       TOPBAR MOBILE (visível apenas em mobile)
+  ════════════════════════════════════════ -->
+  <div class="topbar-mobile">
+    <div class="sidebar-logo" style="padding:0; border:none;">
+      <div class="logo-icon">FT</div>
+      <span class="logo-text">FinTrack</span>
+    </div>
+    <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Overlay mobile -->
+  <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+  <!-- ════════════════════════════════════════
+       SIDEBAR
+  ════════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Logo -->
+    <div class="sidebar-logo">
+      <div class="logo-icon">FT</div>
+      <span class="logo-text">FinTrack</span>
+    </div>
+
+    <!-- Navegação -->
+    <nav class="sidebar-nav">
+      <span class="nav-label">Principal</span>
+
+      <!-- Dashboard (ativo) -->
+      <a href="#" class="nav-item active">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        Dashboard
+      </a>
+
+      <!-- Transferências -->
+      <a href="#" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+        </svg>
+        Transferências
+      </a>
+
+      <!-- Extrato -->
+      <a href="#" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+        </svg>
+        Extrato
+      </a>
+
+      <!-- Pagamentos -->
+      <a href="#" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+        </svg>
+        Pagamentos
+      </a>
+
+      <span class="nav-label">Planejamento</span>
+
+      <!-- Metas -->
+      <a href="#" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+        </svg>
+        Metas
+      </a>
+
+      <!-- Categorias -->
+      <a href="#" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+        </svg>
+        Categorias
+      </a>
+
+      <span class="nav-label">Sistema</span>
+
+      <!-- Configurações -->
+      <a href="#" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        Configurações
+      </a>
+    </nav>
+
+    <!-- Avatar do usuário -->
+    <div class="sidebar-footer">
+      <div class="avatar">AR</div>
+      <div class="avatar-info">
+        <span class="avatar-name">Arthur Lucena</span>
+        <span class="avatar-plan">Conta gratuita</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ════════════════════════════════════════
+       CONTEÚDO PRINCIPAL
+  ════════════════════════════════════════ -->
+  <main class="main-content">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1 class="page-title">Visão Geral</h1>
+      <p class="page-subtitle">Bem-vindo de volta, Arthur 👋 &nbsp;·&nbsp; Abril 2025</p>
+    </div>
+
+    <!-- ── Cards de Saldo ── -->
+    <div class="cards-grid">
+
+      <!-- Card principal: Saldo -->
+      <div class="card-saldo">
+        <p class="saldo-label">Saldo disponível</p>
+        <p class="saldo-value">R$ 12.450,00</p>
+        <div class="saldo-badge">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+          </svg>
+          18,9% este mês
+        </div>
+      </div>
+
+      <!-- Card: Entradas -->
+      <div class="card-resumo">
+        <div class="resumo-top">
+          <span class="resumo-label">Entradas</span>
+          <div class="resumo-icon" style="background:#F0FDF4;">
+            <svg width="18" height="18" fill="none" stroke="#16A34A" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+            </svg>
+          </div>
+        </div>
+        <p class="resumo-value" style="color:#16A34A;">R$ 8.200</p>
+      </div>
+
+      <!-- Card: Saídas -->
+      <div class="card-resumo">
+        <div class="resumo-top">
+          <span class="resumo-label">Saídas</span>
+          <div class="resumo-icon" style="background:#FEF2F2;">
+            <svg width="18" height="18" fill="none" stroke="#DC2626" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+          </div>
+        </div>
+        <p class="resumo-value" style="color:#DC2626;">R$ 3.100</p>
+      </div>
+
+      <!-- Card: Investimentos -->
+      <div class="card-resumo">
+        <div class="resumo-top">
+          <span class="resumo-label">Investimentos</span>
+          <div class="resumo-icon" style="background:#EFF6FF;">
+            <svg width="18" height="18" fill="none" stroke="#2563EB" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+          </div>
+        </div>
+        <p class="resumo-value" style="color:#2563EB;">R$ 4.500</p>
+      </div>
+
+    </div>
+    <!-- fim cards-grid -->
+
+    <!-- ── Ações Rápidas ── -->
+    <div class="acoes-grid">
+
+      <a href="#" class="acao-btn">
+        <div class="acao-icon">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+          </svg>
+        </div>
+        <span class="acao-label">Transferir</span>
+      </a>
+
+      <a href="#" class="acao-btn">
+        <div class="acao-icon">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+          </svg>
+        </div>
+        <span class="acao-label">Pagar Conta</span>
+      </a>
+
+      <a href="#" class="acao-btn">
+        <div class="acao-icon">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+          </svg>
+        </div>
+        <span class="acao-label">Depositar</span>
+      </a>
+
+      <a href="#" class="acao-btn">
+        <div class="acao-icon">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+          </svg>
+        </div>
+        <span class="acao-label">Cobrar</span>
+      </a>
+
+    </div>
+    <!-- fim acoes-grid -->
+
+    <!-- ── Seção inferior ── -->
+    <div class="bottom-grid">
+
+      <!-- Tabela de Transações Recentes -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title">Transações recentes</h2>
+          <a href="#" class="ver-todas">
+            Ver todas
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Cabeçalho da tabela -->
+        <div class="table-header">
+          <span class="th">Descrição</span>
+          <span class="th col-tipo">Tipo</span>
+          <span class="th col-cat">Categoria</span>
+          <span class="th">Data</span>
+          <span class="th" style="text-align:right;">Valor</span>
+        </div>
+
+        <!-- Linha 1 -->
+        <div class="table-row">
+          <div class="tx-desc">
+            <div class="tx-icon" style="background:#FEF2F2; color:#DC2626;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+              </svg>
+            </div>
+            <div>
+              <p class="tx-name">Netflix</p>
+              <span class="status-pill status-concluida" style="font-size:10px; padding:1px 6px;">Concluída</span>
+            </div>
+          </div>
+          <span class="tx-type-badge badge-pix col-tipo">Pix</span>
+          <span class="tx-cat col-cat">Entretenimento</span>
+          <span class="tx-data">28/04/2025</span>
+          <span class="tx-valor valor-negativo" style="text-align:right;">- R$ 55,90</span>
+        </div>
+
+        <!-- Linha 2 -->
+        <div class="table-row">
+          <div class="tx-desc">
+            <div class="tx-icon" style="background:#F0FDF4; color:#16A34A;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+              </svg>
+            </div>
+            <div>
+              <p class="tx-name">Salário Empresa X</p>
+              <span class="status-pill status-concluida" style="font-size:10px; padding:1px 6px;">Concluída</span>
+            </div>
+          </div>
+          <span class="tx-type-badge badge-ted col-tipo">TED</span>
+          <span class="tx-cat col-cat">Receita</span>
+          <span class="tx-data">25/04/2025</span>
+          <span class="tx-valor valor-positivo" style="text-align:right;">+ R$ 6.200,00</span>
+        </div>
+
+        <!-- Linha 3 -->
+        <div class="table-row">
+          <div class="tx-desc">
+            <div class="tx-icon" style="background:#FEF2F2; color:#DC2626;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+              </svg>
+            </div>
+            <div>
+              <p class="tx-name">Supermercado Extra</p>
+              <span class="status-pill status-concluida" style="font-size:10px; padding:1px 6px;">Concluída</span>
+            </div>
+          </div>
+          <span class="tx-type-badge badge-pix col-tipo">Pix</span>
+          <span class="tx-cat col-cat">Alimentação</span>
+          <span class="tx-data">24/04/2025</span>
+          <span class="tx-valor valor-negativo" style="text-align:right;">- R$ 312,40</span>
+        </div>
+
+        <!-- Linha 4 -->
+        <div class="table-row">
+          <div class="tx-desc">
+            <div class="tx-icon" style="background:#F0FDF4; color:#16A34A;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+              </svg>
+            </div>
+            <div>
+              <p class="tx-name">Transferência João</p>
+              <span class="status-pill status-concluida" style="font-size:10px; padding:1px 6px;">Concluída</span>
+            </div>
+          </div>
+          <span class="tx-type-badge badge-pix col-tipo">Pix</span>
+          <span class="tx-cat col-cat">Transferência</span>
+          <span class="tx-data">22/04/2025</span>
+          <span class="tx-valor valor-positivo" style="text-align:right;">+ R$ 800,00</span>
+        </div>
+
+        <!-- Linha 5 -->
+        <div class="table-row">
+          <div class="tx-desc">
+            <div class="tx-icon" style="background:#FEF2F2; color:#DC2626;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+              </svg>
+            </div>
+            <div>
+              <p class="tx-name">Conta de Luz</p>
+              <span class="status-pill status-concluida" style="font-size:10px; padding:1px 6px;">Concluída</span>
+            </div>
+          </div>
+          <span class="tx-type-badge badge-bol col-tipo">Boleto</span>
+          <span class="tx-cat col-cat">Utilidades</span>
+          <span class="tx-data">20/04/2025</span>
+          <span class="tx-valor valor-negativo" style="text-align:right;">- R$ 145,00</span>
+        </div>
+
+      </div>
+      <!-- fim tabela -->
+
+      <!-- Painel lateral: Metas + Alertas -->
+      <div class="metas-panel">
+
+        <!-- Metas de Economia -->
+        <div class="meta-card">
+          <div class="meta-card-header">
+            <h3 class="meta-card-title">Metas de Economia</h3>
+            <a href="#" style="font-size:12px; color:#2563EB; font-weight:600; text-decoration:none;">+ Nova</a>
+          </div>
+
+          <!-- Meta 1 -->
+          <div class="meta-item">
+            <div class="meta-item-header">
+              <span class="meta-item-name">🏖️ Viagem nas férias</span>
+              <span class="meta-item-valores">R$ 1.800 / R$ 5.000</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-ok" style="width:36%;"></div>
+            </div>
+            <p class="meta-pct pct-ok">36% concluído</p>
+          </div>
+
+          <!-- Meta 2 -->
+          <div class="meta-item">
+            <div class="meta-item-header">
+              <span class="meta-item-name">💻 Notebook novo</span>
+              <span class="meta-item-valores">R$ 2.600 / R$ 3.500</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-warn" style="width:74%;"></div>
+            </div>
+            <p class="meta-pct pct-warn">74% concluído</p>
+          </div>
+
+          <!-- Meta 3 -->
+          <div class="meta-item">
+            <div class="meta-item-header">
+              <span class="meta-item-name">🚗 Reserva emergência</span>
+              <span class="meta-item-valores">R$ 950 / R$ 10.000</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-ok" style="width:9.5%;"></div>
+            </div>
+            <p class="meta-pct pct-ok">9,5% concluído</p>
+          </div>
+
+        </div>
+        <!-- fim metas -->
+
+        <!-- Limites por Categoria -->
+        <div class="meta-card">
+          <div class="meta-card-header">
+            <h3 class="meta-card-title">Limites por Categoria</h3>
+            <span style="font-size:11px; color:#94A3B8;">Abril 2025</span>
+          </div>
+
+          <div class="meta-item">
+            <div class="meta-item-header">
+              <span class="meta-item-name">🍔 Alimentação</span>
+              <span class="meta-item-valores">R$ 640 / R$ 800</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-warn" style="width:80%;"></div>
+            </div>
+            <p class="meta-pct pct-warn">80% — Aviso preventivo</p>
+          </div>
+
+          <div class="meta-item">
+            <div class="meta-item-header">
+              <span class="meta-item-name">🎬 Entretenimento</span>
+              <span class="meta-item-valores">R$ 310 / R$ 300</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-danger" style="width:100%;"></div>
+            </div>
+            <p class="meta-pct pct-danger">103% — Limite ultrapassado!</p>
+          </div>
+
+          <div class="meta-item">
+            <div class="meta-item-header">
+              <span class="meta-item-name">🚌 Transporte</span>
+              <span class="meta-item-valores">R$ 180 / R$ 500</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-ok" style="width:36%;"></div>
+            </div>
+            <p class="meta-pct pct-ok">36% — Dentro do limite</p>
+          </div>
+
+        </div>
+        <!-- fim limites -->
+
+        <!-- Alertas Recentes -->
+        <div class="meta-card">
+          <div class="meta-card-header">
+            <h3 class="meta-card-title">Alertas Recentes</h3>
+            <span style="font-size:11px; background:#FEF2F2; color:#DC2626; font-weight:600; padding:2px 8px; border-radius:20px;">2 novos</span>
+          </div>
+
+          <div class="alerta-item">
+            <div class="alerta-dot dot-danger"></div>
+            <div>
+              <p class="alerta-texto"><strong>Entretenimento</strong> ultrapassou 100% do limite mensal (R$ 310 de R$ 300).</p>
+              <p class="alerta-hora">Hoje · 14h32</p>
+            </div>
+          </div>
+
+          <div class="alerta-item">
+            <div class="alerta-dot dot-warn"></div>
+            <div>
+              <p class="alerta-texto"><strong>Alimentação</strong> atingiu 80% do limite. Faltam R$ 160 para o fim do mês.</p>
+              <p class="alerta-hora">Hoje · 09h15</p>
+            </div>
+          </div>
+
+          <div class="alerta-item">
+            <div class="alerta-dot dot-ok"></div>
+            <div>
+              <p class="alerta-texto">Meta <strong>Notebook novo</strong> está em 74%. Você está no caminho certo!</p>
+              <p class="alerta-hora">Ontem · 18h00</p>
+            </div>
+          </div>
+
+        </div>
+        <!-- fim alertas -->
+
+      </div>
+      <!-- fim metas-panel -->
+
+    </div>
+    <!-- fim bottom-grid -->
+
+  </main>
+  <!-- fim main-content -->
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT — apenas para toggle do menu mobile
+       (sem lógica de negócio, conforme requisitado)
+  ════════════════════════════════════════ -->
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
