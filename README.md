@@ -31,7 +31,7 @@ git init
 git add .
 git commit -m "feat: dashboard FinTrack com Tailwind CSS"
 git branch -M main
-git remote add origin https://github.com/SEU_USUARIO/fintrack-web.git
+git remote add origin https://github.com/ArthurLucce/fintrack-web.git
 git push -u origin main
 ```
 
